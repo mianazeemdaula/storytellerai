@@ -7,7 +7,11 @@ const auth = require('./app/middleware/auth');
 
 // app
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+    {
+        origin: '*'
+    }
+));
 
 // routes
 app.get('/', (req, res) => {
