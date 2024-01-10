@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config();
 const db = require('./app/models');
 const app = express();
@@ -6,6 +7,7 @@ const auth = require('./app/middleware/auth');
 
 // app
 app.use(express.json());
+app.use(cors());
 
 // routes
 app.get('/', (req, res) => {
