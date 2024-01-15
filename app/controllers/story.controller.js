@@ -27,7 +27,6 @@ router.post('/', async (req, res) => {
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
         const cat = await db.Category.findByPk(category_id);
         const promot = title + "\nthe story mubt be of type " + cat.name;
-        console.log(promot)
         const result = await model.generateContent(promot);
         const response = await result.response;
         var content = response.text();
