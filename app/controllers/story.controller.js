@@ -22,28 +22,28 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    try {
-        const { title, category_id } = req.body;
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const cat = await db.Category.findByPk(category_id);
-        const promot = title + "\nthe story mubt be of type " + cat.name;
-        console.log(promot)
-        const result = await model.generateContent(promot);
-        const response = await result.response;
-        var content = response.text();
-        const cover = "https://picsum.photos/seed/200/300";
-        var story = await db.Story.create({
-            title,
-            content: content,
-            categoryId: cat.id,
-            userId: req.user.id,
-            cover,
-        });
-        return res.json(story);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Somthing went wrong", raw: error });
-    }
+    // try {
+    const { title, category_id } = req.body;
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const cat = await db.Category.findByPk(category_id);
+    const promot = title + "\nthe story mubt be of type " + cat.name;
+    console.log(promot)
+    const result = await model.generateContent(promot);
+    const response = await result.response;
+    var content = response.text();
+    const cover = "https://picsum.photos/seed/200/300";
+    var story = await db.Story.create({
+        title,
+        content: content,
+        categoryId: cat.id,
+        userId: req.user.id,
+        cover,
+    });
+    return res.json(story);
+    // } catch (error) {
+    //     console.log(error);
+    //     res.status(500).json({ message: "Somthing went wrong", raw: error });
+    // }
 });
 
 module.exports = router;
